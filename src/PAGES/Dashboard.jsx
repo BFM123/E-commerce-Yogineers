@@ -5,6 +5,7 @@ import HeroSection from "../COMPONENTS/DashboardComponents/HeroSection";
 import Shipping from "../COMPONENTS/COMMON/Shipping";
 import Carousel from "../COMPONENTS/COMMON/Carousel";
 import Carousel1 from "../COMPONENTS/COMMON/Carousel1";
+import Explore from "../COMPONENTS/DashboardComponents/Explore";
 
 const Dashboard = () => {
 
@@ -34,8 +35,8 @@ const Dashboard = () => {
         </div>
 
         <Navbar />
-        <div className="h-100"></div>
-        {/* <HeroSection /> */}
+        <Explore/>
+        <div className="h-130"></div>
         <Carousel/>
         <Carousel1/>
         <Shipping/>
