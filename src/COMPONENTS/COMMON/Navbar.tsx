@@ -182,7 +182,7 @@ const Navbar = () => {
                                   href="#"
                                   className="flex flex-col p-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
                                 >
-                                  <span className="font-medium text-white">
+                                  <span className="font-medium text-white whitespace-nowrap">
                                     {subItem.name}
                                   </span>
                                   {/* Only show description if no submenu */}
@@ -199,7 +199,7 @@ const Navbar = () => {
                                       {subItem.description.split(",").map((child, childIdx) => (
                                         <div
                                           key={childIdx}
-                                          className="px-3 py-2 rounded-md text-sm text-white hover:bg-gray-800 transition-colors duration-200"
+                                          className="px-3 py-2 rounded-md text-sm text-white hover:bg-gray-800 transition-colors duration-200 whitespace-nowrap"
                                         >
                                           {child.trim()}
                                         </div>
@@ -217,13 +217,13 @@ const Navbar = () => {
                   {/* Deals and Support always at the end */}
                   <a
                     href="#"
-                    className="px-2 py-2 rounded-md text-sm font-medium text-black hover:text-white hover:bg-gray-800 transition-colors duration-200"
+                    className="px-2 py-2 rounded-md text-sm font-medium text-black hover:text-white hover:bg-gray-800 transition-colors duration-200 whitespace-nowrap"
                   >
                     Deals
                   </a>
                   <a
                     href="#"
-                    className="px-2 py-2 rounded-md text-sm font-medium text-black hover:text-white hover:bg-gray-800 transition-colors duration-200"
+                    className="px-2 py-2 rounded-md text-sm font-medium text-black hover:text-white hover:bg-gray-800 transition-colors duration-200 whitespace-nowrap"
                   >
                     Support
                   </a>
@@ -355,17 +355,17 @@ const Navbar = () => {
 
               {navItems.map((item, index) => (
                 <div key={index} className="space-y-1">
-                  <button className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">
+                  <button className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left whitespace-nowrap">
                     {item.title}
                   </button>
                   <div className="pl-4 space-y-1">
                     {item.items.map((subItem, subIndex) => (
-                      <div key={subIndex} className="relative group">
+                      <div key={subIndex}>
                         <a
                           href="#"
                           className="flex flex-col p-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
                         >
-                          <span className="font-medium text-white">
+                          <span className="font-medium text-white whitespace-nowrap">
                             {subItem.name}
                           </span>
                           {/* Only show description if no submenu */}
@@ -381,7 +381,7 @@ const Navbar = () => {
                             {subItem.description.split(",").map((child, childIdx) => (
                               <div
                                 key={childIdx}
-                                className="px-3 py-2 rounded-md text-sm text-white hover:bg-gray-800 transition-colors duration-200"
+                                className="px-3 py-2 rounded-md text-sm text-white hover:bg-gray-800 transition-colors duration-200 whitespace-nowrap"
                               >
                                 {child.trim()}
                               </div>
@@ -395,13 +395,13 @@ const Navbar = () => {
               ))}
               <a
                 href="#"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium whitespace-nowrap"
               >
                 Deals
               </a>
               <a
                 href="#"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium whitespace-nowrap"
               >
                 Support
               </a>
