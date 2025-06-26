@@ -66,6 +66,74 @@ const Navbar = () => {
         { name: "Accessories", description: "EV components" },
       ],
     },
+    {
+      title: "Fashion",
+      items: [
+        { name: "Clothing", description: "Men's Clothing, Women's Clothing" },
+        { name: "Kids' Fashion", description: "Boys, Girls" },
+        { name: "Footwear", description: "Men's, Women's" },
+        { name: "Luggage & Bags", description: "" },
+        { name: "Jewellery", description: "Men's Jewellery, Women's Jewellery" },
+        { name: "Watches", description: "Men's, Women's" },
+        { name: "Beauty", description: "" },
+        { name: "Handbags", description: "" },
+        { name: "Sunglasses & Frames", description: "" },
+        { name: "Fragrances", description: "Perfume, Cologne" },
+      ],
+    },
+    {
+      title: "Books",
+      items: [
+        { name: "Action & Adventure", description: "" },
+        { name: "Arts, Film & Photography", description: "" },
+        { name: "Biographies, Diaries & True Accounts", description: "" },
+        { name: "Business & Economics", description: "" },
+        { name: "Children's Books", description: "" },
+        { name: "Comics & Mangas", description: "" },
+        { name: "Computers & Internet", description: "" },
+        { name: "Crafts, Hobbies & Home", description: "" },
+        { name: "Crime, Thriller & Mystery", description: "" },
+        { name: "Engineering", description: "" },
+        { name: "Exam Preparation", description: "" },
+        { name: "Health, Family & Personal Development", description: "" },
+        { name: "Health, Fitness & Nutrition", description: "" },
+        { name: "Historical Fiction", description: "" },
+        { name: "History", description: "" },
+        { name: "Humour", description: "" },
+        { name: "Language, Linguistics & Writing", description: "" },
+        { name: "Law", description: "" },
+        { name: "Literature & Fiction", description: "" },
+        { name: "Maps & Atlases", description: "" },
+        { name: "Medicine and Health Sciences Textbooks", description: "" },
+        { name: "Politics", description: "" },
+        { name: "Reference", description: "" },
+        { name: "Religion & Spirituality", description: "" },
+        { name: "Romance", description: "" },
+        { name: "School Books", description: "" },
+        { name: "Science and Mathematics Textbooks", description: "" },
+        { name: "Science Fiction & Fantasy", description: "" },
+        { name: "Sciences, Technology & Medicine", description: "" },
+        { name: "Society & Social Sciences", description: "" },
+        { name: "Sports", description: "" },
+        { name: "Teen & Young Adult", description: "" },
+        { name: "Textbooks & Study Guides", description: "" },
+        { name: "Travel & Tourism", description: "" },
+      ],
+    },
+    {
+      title: "Groceries/Supermarket",
+      items: [
+        { name: "Fresh Items", description: "Produce, Dairy, Meat and Seafood, Deli, Bakery" },
+        { name: "Pantry/Dry Goods", description: "Pantry Staples, Beverages, Condiments and Spices, Baking Ingredients, Snacks and Sweets, Frozen Foods" },
+        { name: "Other", description: "Prepared Foods, Household Supplies, International Foods" },
+      ],
+    },
+    {
+      title: "Pharmaceauticals",
+      items: [
+        { name: "Over-the-Counter Drugs", description: "Adults, Children" },
+      ],
+    },
   ];
 
   return (
@@ -89,53 +157,73 @@ const Navbar = () => {
             </div>
             {/* Desktop Navigation */}
             {!isMobileView && (
-              <div className="ml-10 flex items-baseline space-x-4">
+              <div className="ml-10 flex items-center space-x-2 min-w-0 overflow-hidden">
                 <div
-                  className={`transition-all duration-300 ${
+                  className={`flex items-center space-x-2 transition-all duration-300 ${
                     isSearchOpen && !isMobileView
                       ? "opacity-0 scale-95"
                       : "opacity-100 scale-100"
                   }`}
                 >
+                  {/* Dropdown nav items */}
                   {navItems.map((item, index) => (
-                    <div key={index} className="relative group inline-block">
-                      <button className="px-3 py-2 rounded-md text-sm font-medium text-black hover:text-white hover:bg-gray-800 transition-all duration-200 flex items-center">
+                    <div key={index} className="relative group">
+                      <button className="px-2 py-2 rounded-md text-sm font-medium text-black hover:text-white hover:bg-gray-800 transition-all duration-200 flex items-center whitespace-nowrap">
                         {item.title}
                         <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
                       </button>
-
-                      <div className="absolute left-0 mt-2 w-80 bg-[#234152e1] rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      {/* Dropdown: only visible on hover of parent */}
+                      <div className="absolute left-0 mt-2 w-80 bg-[#234152e1] rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
                         <div className="p-4">
                           <div className="grid grid-cols-1 gap-2">
                             {item.items.map((subItem, subIndex) => (
-                              <a
-                                key={subIndex}
-                                href="#"
-                                className="flex flex-col p-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
-                              >
-                                <span className="font-medium text-white">
-                                  {subItem.name}
-                                </span>
-                                <span className="text-sm text-gray-400 mt-1">
-                                  {subItem.description}
-                                </span>
-                              </a>
+                              <div key={subIndex} className="relative group">
+                                <a
+                                  href="#"
+                                  className="flex flex-col p-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
+                                >
+                                  <span className="font-medium text-white">
+                                    {subItem.name}
+                                  </span>
+                                  {/* Only show description if no submenu */}
+                                  {subItem.description && !subItem.description.includes(",") && (
+                                    <span className="text-sm text-gray-400 mt-1">
+                                      {subItem.description}
+                                    </span>
+                                  )}
+                                </a>
+                                {/* Second-level dropdown for sub-categories */}
+                                {subItem.description && subItem.description.includes(",") && (
+                                  <div className="absolute left-full top-0 ml-2 w-56 bg-[#234152e1] rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                                    <div className="p-2">
+                                      {subItem.description.split(",").map((child, childIdx) => (
+                                        <div
+                                          key={childIdx}
+                                          className="px-3 py-2 rounded-md text-sm text-white hover:bg-gray-800 transition-colors duration-200"
+                                        >
+                                          {child.trim()}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
                             ))}
                           </div>
                         </div>
                       </div>
                     </div>
                   ))}
-
+                  {/* Deals and Support always at the end */}
                   <a
                     href="#"
-                    className="px-3 py-2 rounded-md text-sm font-medium text-black hover:text-white hover:bg-gray-800 transition-colors duration-200"
+                    className="px-2 py-2 rounded-md text-sm font-medium text-black hover:text-white hover:bg-gray-800 transition-colors duration-200"
                   >
                     Deals
                   </a>
                   <a
                     href="#"
-                    className="px-3 py-2 rounded-md text-sm font-medium text-black hover:text-white hover:bg-gray-800 transition-colors duration-200"
+                    className="px-2 py-2 rounded-md text-sm font-medium text-black hover:text-white hover:bg-gray-800 transition-colors duration-200"
                   >
                     Support
                   </a>
@@ -272,13 +360,37 @@ const Navbar = () => {
                   </button>
                   <div className="pl-4 space-y-1">
                     {item.items.map((subItem, subIndex) => (
-                      <a
-                        key={subIndex}
-                        href="#"
-                        className="text-gray-400 hover:text-white block px-3 py-2 rounded-md text-sm"
-                      >
-                        {subItem.name}
-                      </a>
+                      <div key={subIndex} className="relative group">
+                        <a
+                          href="#"
+                          className="flex flex-col p-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
+                        >
+                          <span className="font-medium text-white">
+                            {subItem.name}
+                          </span>
+                          {/* Only show description if no submenu */}
+                          {subItem.description && !subItem.description.includes(",") && (
+                            <span className="text-sm text-gray-400 mt-1">
+                              {subItem.description}
+                            </span>
+                          )}
+                        </a>
+                        {/* Second-level dropdown for sub-categories */}
+                        {subItem.description && subItem.description.includes(",") && (
+                          <div className="absolute left-full top-0 ml-2 w-56 bg-[#234152e1] rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                            <div className="p-2">
+                              {subItem.description.split(",").map((child, childIdx) => (
+                                <div
+                                  key={childIdx}
+                                  className="px-3 py-2 rounded-md text-sm text-white hover:bg-gray-800 transition-colors duration-200"
+                                >
+                                  {child.trim()}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </div>
