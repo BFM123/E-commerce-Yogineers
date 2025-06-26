@@ -157,7 +157,7 @@ const Navbar = () => {
             </div>
             {/* Desktop Navigation */}
             {!isMobileView && (
-              <div className="ml-10 flex items-center space-x-2 min-w-0 overflow-hidden">
+              <div className="ml-10 flex items-center space-x-2 min-w-0">
                 <div
                   className={`flex items-center space-x-2 transition-all duration-300 ${
                     isSearchOpen && !isMobileView
@@ -377,17 +377,15 @@ const Navbar = () => {
                         </a>
                         {/* Second-level dropdown for sub-categories */}
                         {subItem.description && subItem.description.includes(",") && (
-                          <div className="absolute left-full top-0 ml-2 w-56 bg-[#234152e1] rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                            <div className="p-2">
-                              {subItem.description.split(",").map((child, childIdx) => (
-                                <div
-                                  key={childIdx}
-                                  className="px-3 py-2 rounded-md text-sm text-white hover:bg-gray-800 transition-colors duration-200"
-                                >
-                                  {child.trim()}
-                                </div>
-                              ))}
-                            </div>
+                          <div className="pl-4 mt-1 space-y-1">
+                            {subItem.description.split(",").map((child, childIdx) => (
+                              <div
+                                key={childIdx}
+                                className="px-3 py-2 rounded-md text-sm text-white hover:bg-gray-800 transition-colors duration-200"
+                              >
+                                {child.trim()}
+                              </div>
+                            ))}
                           </div>
                         )}
                       </div>
