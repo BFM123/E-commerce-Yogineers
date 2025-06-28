@@ -12,10 +12,13 @@ export default [
       globals: globals.browser,
       parserOptions: {
         ecmaVersion: 'latest',
+        ecmaFeatures: 'jsx: true',
         sourceType: 'module',
       },
     },
     plugins: {
+      "plugins": ["react"],
+      "extends": ["plugin:react/recommended"],
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
     },

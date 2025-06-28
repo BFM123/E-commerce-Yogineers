@@ -1,46 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-const Carousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const items = Array.from({ length: 12 }, (_, i) => i + 1); // [1, 2, 3, ..., 12]
-  const visibleCards = 3;
+const Carousel = ({ items = [], onAddToCart }) => (
+  <div className="w-full pt-24 mb-8">
+    <Swiper
+      modules={[Navigation, Pagination, Autoplay]}
+      spaceBetween={20}
+      slidesPerView={3}
+      navigation
+      pagination={{ clickable: true }}
+      autoplay={{ delay: 3000 }}
+      breakpoints={{
+        0: { slidesPerView: 1 },
+        640: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      }}
+    >
+      {items.map((item) => (
+        <SwiperSlide key={item._id}>
+          <Card item={item} onAddToCart={onAddToCart} />
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => 
-      prev >= items.length - visibleCards ? 0 : prev + 1
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => 
-      prev === 0 ? items.length - visibleCards : prev - 1
-    );
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+// Extracted Card component with quantity logic
+const Card = ({ item, onAddToCart }) => {
+  const [quantity, setQuantity] = useState(1);
 
   return (
-    <div className="relative w-full overflow-hidden p-4 backdrop-blur-sm">
-      {/* Carousel Container */}
-      <div className="relative h-180 w-full">
-        <div className="flex h-full transition-transform duration-500 ease-in-out"
-             style={{ transform: `translateX(-${currentIndex * (100 / visibleCards)}%)` }}>
-          {items.map((item, index) => (
-            <div 
-              key={item} 
-              className="w-1/3 flex-shrink-0 p-2"
-            >
-              <div className="bg-white h-full w-full flex items-center justify-center rounded-lg">
-                <div className="text-black text-2xl">Card {item}</div>
-              </div>
-            </div>
-          ))}
-        </div>
+    <div className="bg-white rounded-lg shadow hover:shadow-xl transition-transform duration-300 transform hover:-translate-y-1 p-4 flex flex-col">
+      <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
+        <img
+          src={item.image}
+          alt={item.name}
+          className="max-h-full object-contain"
+        />
+      </div>
+      <h3 className="mt-3 text-lg font-semibold">{item.name}</h3>
+      <p className="text-gray-600 text-sm">{item.description}</p>
+      <p className="mt-1 text-blue-600 font-bold">${item.price}</p>
+      <div className="mt-3 flex items-center space-x-2">
+        <input
+          type="number"
+          min="1"
+          value={quantity}
+          onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+          className="w-16 border border-gray-300 rounded px-2 py-1 text-center"
+        />
+        <button
+          onClick={() => onAddToCart(item, quantity)}
+          className="flex-1 bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+        >
+          Add to Cart
+        </button>
       </div>
     </div>
   );

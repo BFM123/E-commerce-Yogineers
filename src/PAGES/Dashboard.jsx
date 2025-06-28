@@ -1,48 +1,36 @@
-import React from "react";
-import Navbar from "../COMPONENTS/COMMON/Navbar";
-import Footer from "../COMPONENTS/COMMON/Footer";
-import HeroSection from "../COMPONENTS/DashboardComponents/HeroSection";
-import Shipping from "../COMPONENTS/COMMON/Shipping";
+import React, { useState, useEffect } from "react";
 import Carousel from "../COMPONENTS/COMMON/Carousel";
-import Carousel1 from "../COMPONENTS/COMMON/Carousel1";
-import Explore from "../COMPONENTS/DashboardComponents/Explore";
+import ProductGrid from "../COMPONENTS/ProductGrid";
+import axios from "axios";
 
 const Dashboard = () => {
+  const [items, setItems] = useState([]);
+  const [cart, setCart] = useState([]);
 
-  const items = [
-    { id: 1, title: "First Card", content: "Content for first card" },
-    { id: 2, title: "Second Card", content: "Content for second card" },
-    { id: 3, title: "Third Card", content: "Content for third card" }
-  ];
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/items")
+      .then(res => setItems(res.data))
+      .catch(err => console.error(err));
+  }, []);
+
+  const handleAddToCart = (item) => {
+    setCart(prev => [...prev, item]);
+  };
+
+  const carouselItems = items.slice(0, 6);
+  const gridItems = items.slice(6);
 
   return (
-    <>
-      <div className="relative z-20">
-        {/* 🔒 Background Video */}
-        <div className="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source
-              src="https://videos.pexels.com/video-files/3141210/3141210-uhd_2560_1440_25fps.mp4"
-              type="video/mp4"
-            />
-          </video>
-        </div>
-
-        <Navbar />
-        <Explore/>
-        <div className="h-130"></div>
-        <Carousel/>
-        <Carousel1/>
-        <Shipping/>
-        <Footer />
-      </div>
-    </>
+    <div className="min-h-screen bg-gray-50 p-4">
+      <h1 className="text-center text-3xl font-bold mb-6">Explore</h1>
+      <Carousel items={carouselItems} onAddToCart={handleAddToCart} />
+      {gridItems.length > 0 && (
+        <>
+          <h2 className="text-xl font-semibold mt-8 mb-4 text-center">More Products</h2>
+          <ProductGrid items={gridItems} onAddToCart={handleAddToCart} />
+        </>
+      )}
+    </div>
   );
 };
 

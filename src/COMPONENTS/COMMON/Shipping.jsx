@@ -74,7 +74,7 @@ const Shipping = () => {
       </div>
 
       {/* Add Tailwind animation configuration */}
-      <style jsx>{`
+      <style>{`
         @keyframes shipping-scroll {
           0% {
             transform: translateX(0);

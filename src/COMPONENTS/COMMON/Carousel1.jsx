@@ -93,7 +93,7 @@ const Carousel1 = () => {
       </div>
 
       {/* Tailwind + custom animation style */}
-      <style jsx>{`
+      <style>{`
         @keyframes scroll {
           0% {
             transform: translateX(0);
