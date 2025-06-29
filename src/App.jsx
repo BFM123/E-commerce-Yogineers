@@ -1,36 +1,40 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "./COMPONENTS/COMMON/NavBar";
-import Carousel from "./COMPONENTS/COMMON/Carousel";
-import ProductGrid from "./COMPONENTS/ProductGrid";
+import Navbar from "./COMPONENTS/COMMON/Navbar";
+import Carousel, { Card } from "./COMPONENTS/COMMON/Carousel";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useCart } from "./CONTEXT/CartContext";
 
 function App() {
   const [items, setItems] = useState([]);
-  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/items")
       .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
-        const cats = [...new Set(data.map((item) => item.category))];
-        setCategories(cats);
-      });
+      .then((data) => setItems(data))
+      .catch((err) => console.error(err));
   }, []);
 
   const handleAddToCart = (item, quantity) => {
-    toast.success(`Added ${quantity} x ${item.name} to cart!`);
+    toast.success(`${quantity} × ${item.name} added to cart!`);
+    // You can add actual cart logic here if desired
   };
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <NavBar categories={categories} />
-      <main className="container mx-auto px-4">
-        <Carousel items={items.slice(0, 5)} onAddToCart={handleAddToCart} />
-        <ProductGrid items={items} onAddToCart={handleAddToCart} />
+      <Navbar />
+      <ToastContainer />
+      <main className="max-w-7xl mx-auto px-4">
+        <Carousel items={items} onAddToCart={handleAddToCart} />
+        <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-800">
+          Explore More Products
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-12">
+          {items.map((item) => (
+            <Card key={item._id} item={item} onAddToCart={handleAddToCart} />
+          ))}
+        </div>
       </main>
-      <ToastContainer position="bottom-right" />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ChevronDown, Menu, X, ShoppingCart, User, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../../CONTEXT/CartContext";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -8,6 +9,7 @@ const Navbar = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const { getCartCount } = useCart();
 
   useEffect(() => {
     const handleResize = () => {
@@ -227,7 +229,7 @@ const Navbar = () => {
                       <button className="p-2 rounded-md text-black hover:text-white hover:bg-gray-800 relative">
                         <ShoppingCart className="h-5 w-5" />
                         <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                          0
+                          {getCartCount()}
                         </span>
                       </button>
                     </>
