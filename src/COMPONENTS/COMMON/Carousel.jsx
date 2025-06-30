@@ -70,7 +70,7 @@ export const Card = ({ item = []}) => {
         </div>
 
         {/* Quantity and Add to Cart */}
-        <div className="flex items-center space-x-3 mb-2">
+        {/*<div className="flex items-center space-x-3 mb-2">
           <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
             <button
               onClick={() =>
@@ -104,7 +104,7 @@ export const Card = ({ item = []}) => {
           >
             Add to Cart
           </button>
-        </div>
+        </div>*/}
       </div>
     </div>
   );

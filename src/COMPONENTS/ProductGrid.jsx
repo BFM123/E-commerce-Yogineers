@@ -23,7 +23,7 @@ const ProductGrid = ({ items = []}) => {
           return (
             <div
               key={item._id}
-              className="group bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 overflow-hidden border border-white/20 mx-2 flex flex-col"
+              className="group bg-[#a5d8f0] backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 overflow-hidden border border-white/20 mx-2 flex flex-col"
             >
                {/* Enhanced Image Container */}
               <div className="relative overflow-hidden w-full aspect-[4/3] flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
