@@ -6,9 +6,22 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import EnhancedImage from "../EnhancedImage";
+import { useCart } from "../../CONTEXT/cartContext";
 
-export const Card = ({ item, onAddToCart }) => {
-  const [quantity, setQuantity] = useState(1);
+
+export const Card = ({ item = []}) => {
+  const { addToCart } = useCart();
+
+    // Store quantity for each item by id
+  const [quantities, setQuantities] = useState({});
+
+  const handleQuantityChange = (id, value) => {
+    setQuantities(q => ({
+      ...q,
+      [id]: Math.max(1, value)
+    }));
+  };
+  
 
   return (
     <div className="group bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 overflow-hidden border border-white/20 mx-2">
@@ -57,39 +70,39 @@ export const Card = ({ item, onAddToCart }) => {
         </div>
 
         {/* Quantity and Add to Cart */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 mb-2">
           <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
             <button
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="px-3 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors duration-200"
+              onClick={() =>
+                handleQuantityChange(item._id, (quantities[item._id] || 1) - 1)
+              }
+              className="px-3 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600"
             >
               -
             </button>
             <input
               type="number"
               min="1"
-              value={quantity}
-              onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+              value={quantities[item._id] || 1}
+              onChange={e =>
+                handleQuantityChange(item._id, parseInt(e.target.value) || 1)
+              }
               className="w-16 px-2 py-2 text-center border-0 focus:outline-none focus:ring-0"
             />
             <button
-              onClick={() => setQuantity(quantity + 1)}
-              className="px-3 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors duration-200"
+              onClick={() =>
+                handleQuantityChange(item._id, (quantities[item._id] || 1) + 1)
+              }
+              className="px-3 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600"
             >
               +
             </button>
           </div>
-          
           <button
-            onClick={() => onAddToCart(item, quantity)}
-            className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+            onClick={() => addToCart(item, quantities[item._id] || 1)}
+            className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-4 rounded-lg"
           >
-            <span className="flex items-center justify-center gap-2">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.68 4.32a1 1 0 001.83.8l.85-2.12m0 0h10m-10 0a2 2 0 104 0m6 0a2 2 0 104 0" />
-              </svg>
-              Add to Cart
-            </span>
+            Add to Cart
           </button>
         </div>
       </div>
@@ -97,7 +110,7 @@ export const Card = ({ item, onAddToCart }) => {
   );
 };
 
-const Carousel = ({ items = [], onAddToCart }) => (
+const Carousel = ({ items = [], AddToCart }) => (
   <div className="w-full relative">
     {/* Background with gradient */}
     <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900"></div>
@@ -166,7 +179,7 @@ const Carousel = ({ items = [], onAddToCart }) => (
         >
           {items.map((item) => (
             <SwiperSlide key={item._id}>
-              <Card item={item} onAddToCart={onAddToCart} />
+              <Card item={item} AddToCart={AddToCart} />
             </SwiperSlide>
           ))}
         </Swiper>

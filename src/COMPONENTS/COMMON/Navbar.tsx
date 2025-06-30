@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { ChevronDown, Menu, X, ShoppingCart, User, Search } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useCart } from "../../CONTEXT/CartContext";
 
-const Navbar = () => {
+const Navbar = ({ onSearch }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-  const { getCartCount } = useCart();
+  const location = useLocation();
+  const { cart } = useCart();
+  const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
   useEffect(() => {
     const handleResize = () => {
@@ -20,10 +22,16 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Integrate search with dashboard/shoplist via onSearch prop if provided
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      if (onSearch) {
+        onSearch(searchQuery);
+        if (location.pathname !== "/") navigate("/");
+      } else {
+        navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      }
       setSearchQuery("");
       setIsSearchOpen(false);
     }
@@ -138,7 +146,7 @@ const Navbar = () => {
                       {item.title}
                       <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
                     </button>
-                    <div className="absolute left-0 mt-2 w-80 bg-[#234152e1] rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                    <div className="absolute left-0 mt-2 w-80 bg-[#234152e1] rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
                       <div className="p-4 grid grid-cols-1 gap-2">
                         {item.items.map((sub, subIndex) => (
                           <a
@@ -226,12 +234,14 @@ const Navbar = () => {
                       <button className="p-2 rounded-md text-black hover:text-white hover:bg-gray-800">
                         <User className="h-5 w-5" />
                       </button>
-                      <button className="p-2 rounded-md text-black hover:text-white hover:bg-gray-800 relative">
-                        <ShoppingCart className="h-5 w-5" />
-                        <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                          {getCartCount()}
-                        </span>
-                      </button>
+                      <Link to="/cart" className="p-2 rounded-md text-black hover:text-white hover:bg-gray-800 relative">
+                        <ShoppingCart className="h-6 w-6" />
+                        {cartCount > 0 && (
+                          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5 font-bold shadow">
+                            {cartCount}
+                          </span>
+                        )}
+                      </Link>
                     </>
                   )}
                   {isMobileView && (
