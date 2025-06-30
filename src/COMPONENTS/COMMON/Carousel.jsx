@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
+import EnhancedImage from "../EnhancedImage";
 
 export const Card = ({ item, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
@@ -13,15 +14,13 @@ export const Card = ({ item, onAddToCart }) => {
     <div className="group bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 overflow-hidden border border-white/20 mx-2">
       {/* Image Container */}
       <div className="relative overflow-hidden">
-        <div className="w-full h-80 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-          <img
+        <div className="w-full aspect-[4/3] flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-0">
+          <EnhancedImage
             src={item.image}
             alt={item.name}
-            className="max-h-full max-w-full object-contain transition-transform duration-700 group-hover:scale-110 drop-shadow-xl"
-            onError={(e) => {
-              e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xNTAgODBMMjIwIDIyMEg4MEwxNTAgODBaIiBmaWxsPSIjRDFENUNCIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEwMCIgcj0iMjAiIGZpbGw9IiNEMUQ1REIiLz4KPC9zdmc+';
-            }}
-            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 drop-shadow-xl"
+            containerClassName="w-full h-full flex items-center justify-center"
+            showLoader={true}
           />
         </div>
         
