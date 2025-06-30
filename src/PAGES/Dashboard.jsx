@@ -27,9 +27,9 @@ const Dashboard = () => {
       {gridItems.length > 0 && (
         <>
           <h2 className="text-xl font-semibold mt-8 mb-4 text-center">More Products</h2>
-          <ProductGrid items={gridItems} onAddToCart={handleAddToCart} />
         </>
       )}
+      <ProductGrid items={items} onAddToCart={handleAddToCart} />
     </div>
   );
 };
