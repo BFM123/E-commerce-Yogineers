@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductGrid from "./COMPONENTS/ProductGrid";
 import CartPage from "./PAGES/CartPage";
+import ShoppingList from "./PAGES/ShoppingList";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -78,6 +79,8 @@ function App() {
           }
         />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/shop" element={<ShoppingList isBusinessOwner={false} />}
+        />
       </Routes>
     </div>
   );

@@ -39,9 +39,10 @@ const ShoppingList = ({ isBusinessOwner }) => {
       )}
       <h2 className="text-3xl font-extrabold text-center mb-6 tracking-wide">
         {categoryFilter
-          ? `Category: ${categoryFilter}`
+          ? `Category: ${categoryFilter}${subcategoryFilter ? ` > ${subcategoryFilter}` : ""}`
           : "Shop Our Products"}
       </h2>
+
       <div
         className="grid gap-4 w-full"
         style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}

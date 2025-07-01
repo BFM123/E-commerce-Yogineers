@@ -149,20 +149,17 @@ const Navbar = ({ onSearch }) => {
                     <div className="absolute left-0 mt-2 w-80 bg-[#234152e1] rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
                       <div className="p-4 grid grid-cols-1 gap-2">
                         {item.items.map((sub, subIndex) => (
-                          <a
+                          <Link
                             key={subIndex}
-                            href="#"
+                            to={`/shop?category=${encodeURIComponent(item.title)}&subcategory=${encodeURIComponent(sub.description || "")}`}
                             className="flex flex-col p-3 rounded-lg hover:bg-gray-800 transition duration-200"
+                            onClick={() => setIsMobileMenuOpen(false)}  // Close menu on mobile
                           >
-                            <span className="font-medium text-white">
-                              {sub.name}
-                            </span>
+                            <span className="font-medium text-white">{sub.name}</span>
                             {sub.description && (
-                              <span className="text-sm text-gray-400 mt-1">
-                                {sub.description}
-                              </span>
+                              <span className="text-sm text-gray-400 mt-1">{sub.description}</span>
                             )}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     </div>
@@ -271,13 +268,14 @@ const Navbar = ({ onSearch }) => {
                 </button>
                 <div className="pl-4 space-y-1">
                   {item.items.map((sub, subIndex) => (
-                    <a
+                    <Link
                       key={subIndex}
-                      href="#"
+                      to={`/shop?category=${encodeURIComponent(item.title)}&subcategory=${encodeURIComponent(sub.description || "")}`}
                       className="text-gray-400 hover:text-white block px-3 py-2 text-sm"
+                      onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {sub.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
